@@ -15,7 +15,7 @@ Add `--build` flag to rebuild the image after making changes to the code.
 ## Package service
 
 ### Overview
-The `UserService` package provides a service for managing user data in a Go application. It leverages caching to improve performance and reduce unnecessary data fetching. This service is particularly useful for applications that require efficient user data retrieval and management.
+The `service` package provides a service for managing user data in a Go application. It leverages caching to improve performance and reduce unnecessary data fetching. This service is particularly useful for applications that require efficient user data retrieval and management.
 
 The package consists of the `UserService` struct, one exported method, and one helper method.
 
