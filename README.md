@@ -3,7 +3,7 @@
 ## Running the tests
 
 ```bash
-go test ./service -race 
+go test ./src/service -race 
 ```
 ## Running the application 
 ```bash
