@@ -1,6 +1,8 @@
 package cache
 
-import "github.com/tschuyebuhl/livesession/data"
+import (
+	"github.com/tschuyebuhl/livesession/src/data"
+)
 
 type Cache interface {
 	Get(key data.ID) (*data.User, bool, bool)

@@ -1,7 +1,7 @@
 package cache
 
 import (
-	"github.com/tschuyebuhl/livesession/data"
+	"github.com/tschuyebuhl/livesession/src/data"
 	"testing"
 )
 
@@ -19,5 +19,6 @@ func TestCacheOperations(t *testing.T) {
 	if _, found, cached := cache.Get("user2"); found && !cached {
 		t.Errorf("Expected cache miss for user2 but found cached data")
 	}
+	cache.Delete(user1.ID)
 
 }

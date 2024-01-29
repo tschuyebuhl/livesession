@@ -3,14 +3,14 @@ package main
 import (
 	"context"
 	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/tschuyebuhl/livesession/cache"
-	"github.com/tschuyebuhl/livesession/data"
-	"github.com/tschuyebuhl/livesession/service"
+	"github.com/tschuyebuhl/livesession/src/cache"
+	"github.com/tschuyebuhl/livesession/src/data"
+	"github.com/tschuyebuhl/livesession/src/service"
 	"log/slog"
 )
 
 func main() {
-	dbpool, err := pgxpool.New(context.Background(), "postgres://livesession:livesession@192.168.0.5:5432/livesession")
+	dbpool, err := pgxpool.New(context.Background(), "postgres://livesession:livesession@db:5432/livesession")
 	if err != nil {
 		panic(err)
 	}

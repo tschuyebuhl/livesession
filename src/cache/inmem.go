@@ -1,7 +1,7 @@
 package cache
 
 import (
-	"github.com/tschuyebuhl/livesession/data"
+	"github.com/tschuyebuhl/livesession/src/data"
 	"log/slog"
 	"sync"
 )
