@@ -36,4 +36,9 @@ func main() {
 	}
 	println(cached)
 	println(user.Name)
+	user, cached, err = userService.GetUser("KelseyElliswvnxi")
+	if err != nil {
+		slog.Error("error getting user", "error", err)
+		return
+	}
 }

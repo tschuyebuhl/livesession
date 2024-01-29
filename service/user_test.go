@@ -59,8 +59,8 @@ func TestUserServiceLoad(t *testing.T) {
 	userService := NewUserService(repo, c)
 
 	var wg sync.WaitGroup
-	numRequests := 100
-	numIDs := 10
+	numRequests := 10000
+	numIDs := 100
 
 	for i := 0; i < numRequests; i++ {
 		wg.Add(1)
