@@ -2,29 +2,29 @@ package service
 
 import (
 	"github.com/tschuyebuhl/livesession/src/cache"
-	data2 "github.com/tschuyebuhl/livesession/src/data"
+	"github.com/tschuyebuhl/livesession/src/data"
 	"log/slog"
 	"sync"
 )
 
 type UserService struct {
-	repo    data2.Repository
+	repo    data.Repository
 	cache   cache.Cache
-	pending map[data2.ID][]chan *data2.User
+	pending map[data.ID][]chan *data.User
 	mu      sync.Mutex
 }
 
-func NewUserService(repo data2.Repository, cache cache.Cache) *UserService {
+func NewUserService(repo data.Repository, cache cache.Cache) *UserService {
 	return &UserService{
 		repo:    repo,
 		cache:   cache,
-		pending: make(map[data2.ID][]chan *data2.User),
+		pending: make(map[data.ID][]chan *data.User),
 	}
 }
 
 // GetUser returns a user from the cache if it exists, otherwise it fetches it from the repository and caches it
 // double-checked locking is used in case a goroutine has updated the cache in the meantime
-func (s *UserService) GetUser(id data2.ID) (*data2.User, bool, error) {
+func (s *UserService) GetUser(id data.ID) (*data.User, bool, error) {
 	slog.Info("getting user", "id", id)
 	if user, found, _ := s.cache.Get(id); found {
 		return user, true, nil
@@ -36,14 +36,14 @@ func (s *UserService) GetUser(id data2.ID) (*data2.User, bool, error) {
 		return user, true, nil
 	}
 	if waiters, ok := s.pending[id]; ok {
-		response := make(chan *data2.User)
+		response := make(chan *data.User)
 		s.pending[id] = append(waiters, response)
 		s.mu.Unlock()
 		return <-response, true, nil
 	}
 
 	slog.Info("no pending requests, marking as pending", "id", id)
-	s.pending[id] = []chan *data2.User{}
+	s.pending[id] = []chan *data.User{}
 	s.mu.Unlock()
 
 	slog.Info("cache missed, fetching from repo", "id", id)
@@ -59,7 +59,7 @@ func (s *UserService) GetUser(id data2.ID) (*data2.User, bool, error) {
 	return user, false, nil
 }
 
-func (s *UserService) notifyWaiters(user *data2.User, id data2.ID) {
+func (s *UserService) notifyWaiters(user *data.User, id data.ID) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
